@@ -204,7 +204,7 @@ def image_export(client):
 
     os.makedirs("DF/Images/" + s_name, exist_ok=True)
     with open("DF/Images/"+s_name+"/"+s_name+".tar", "wb") as f:
-        for chunk in image.save():
+        for chunk in image.save(named=True):
             f.write(chunk)
 
 
@@ -558,6 +558,7 @@ def system(client):
 
 
 def sys_exit(client):
+    client.close()
     sys.exit(0)
 
 
@@ -576,14 +577,9 @@ def check_IP(IP):
 
 
 def main():
-    # IP = input("Enter target IP address and Port (ip:port)\n> ")
-    # if not check_IP(IP):
-    #     print("Error!\n"
-    #           "please IP Address and Port number (IP:Port)")
-    #     sys.exit(0)
 
-    IP = "211.252.26.126:2375"
-    client = docker.DockerClient(base_url='tcp://'+IP)
+    IP = "192.168.126.129:2375"
+    client = docker.DockerClient(base_url='tcp://'+IP, version='auto')
 
     Menu_actions = {
         1: containers,
